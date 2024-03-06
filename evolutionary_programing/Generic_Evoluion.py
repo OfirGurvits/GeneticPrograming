@@ -46,5 +46,5 @@ class Generic_Evoluion:
             parent2 = self.problem.get_parent(fitness, random_number, temp)
             child1 = self.problem.crossover(parent1, parent2)
             child2 = self.problem.crossover(parent2, parent1)
-            temp.append(child1)
-            temp.append(child2)
+            self.problem.chromosomes.append(child1)
+            self.problem.chromosomes.append(child2)
