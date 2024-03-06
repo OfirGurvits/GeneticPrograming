@@ -1,6 +1,8 @@
 # recieves a class which implements fitness and has a field called
 # chromosomes
 import random
+
+
 class Generic_Evoluion:
     def __init__(self, problem, num_of_gens, elitism):
         self.problem = problem
@@ -16,6 +18,12 @@ class Generic_Evoluion:
             fitness[chromosome] = cur_fitness
             total += cur_fitness
 
+    def get_parent(self, fitness, number, chromosomes):
+        for chromosome in chromosomes:
+            if fitness[chromosome] > number:
+                return chromosome
+            number -= fitness[chromosome]
+
     def crossover(self, total, fitness):
         num_of_chromosomes = len(self.problem.chromosomes)
         fitness_range = total
@@ -29,5 +37,14 @@ class Generic_Evoluion:
         self.problem.chromosomes.empty()
         for i in range(self.elitism):
             self.problem.chromosomes.append(temp[i])
-        for i in range(num_of_chromosomes - self.elitism):
+
+        # do roulette and generate children
+        for i in range((num_of_chromosomes - self.elitism) / 2):
             random_number = random.randint(0, total)
+            parent1 = self.problem.get_parent(fitness, random_number, temp)
+            random_number = random.randint(0, total)
+            parent2 = self.problem.get_parent(fitness, random_number, temp)
+            child1 = self.problem.crossover(parent1, parent2)
+            child2 = self.problem.crossover(parent2, parent1)
+            temp.append(child1)
+            temp.append(child2)
