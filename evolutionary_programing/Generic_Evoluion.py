@@ -17,6 +17,7 @@ class Generic_Evoluion:
             cur_fitness = self.problem.fitness(population)
             fitness[chromosome] = cur_fitness
             total += cur_fitness
+        self.crossover(total, fitness)
 
     def get_parent(self, fitness, number, chromosomes):
         for chromosome in chromosomes:
@@ -48,3 +49,7 @@ class Generic_Evoluion:
             child2 = self.problem.crossover(parent2, parent1)
             self.problem.chromosomes.append(child1)
             self.problem.chromosomes.append(child2)
+
+    def run(self):
+        for i in range(self.num_of_gens):
+            self.do_one_generation()
