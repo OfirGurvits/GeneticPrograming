@@ -50,5 +50,5 @@ class Queens_Evoluion:
 
 if __name__ == "__main__":
     queens = Queens_Evoluion(200, 0.1)
-    solution = GenericEvoluion(queens, 500, 4)
+    solution = GenericEvoluion(queens, 200, 2)
     solution.run()
