@@ -28,7 +28,8 @@ class Generic_Evoluion:
     def crossover(self, total, fitness):
         num_of_chromosomes = len(self.problem.chromosomes)
         fitness_range = total
-        self.problem.population.chromosomes.sort(key=lambda chromosome: fitness[chromosome])
+        self.problem.chromosomes.sort(key=lambda chromosome: fitness[chromosome])
+        self.problem.chromosomes.reverse()
 
         for i in range(self.elitism):
             fitness_range -= fitness[self.problem.chromosomes[-1]]
@@ -45,8 +46,7 @@ class Generic_Evoluion:
             parent1 = self.problem.get_parent(fitness, random_number, temp)
             random_number = random.randint(0, total)
             parent2 = self.problem.get_parent(fitness, random_number, temp)
-            child1 = self.problem.crossover(parent1, parent2)
-            child2 = self.problem.crossover(parent2, parent1)
+            child1, child2 = self.problem.crossover(parent1, parent2)
             self.problem.chromosomes.append(child1)
             self.problem.chromosomes.append(child2)
 
