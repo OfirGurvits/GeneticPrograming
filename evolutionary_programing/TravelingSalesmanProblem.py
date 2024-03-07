@@ -11,6 +11,17 @@ def euclidean_distance(point1, point2):
     return distance
 
 
+def maxPath(matrix):
+    max_element = matrix[0][0]
+
+    for row in matrix:
+        for element in row:
+            if element > max_element:
+                max_element = element
+
+    return max_element * len(matrix[0])
+
+
 class Traveling_Salesman_Evoluion:
 
     def createDistanceMatrix(self, arrayIndex):
@@ -39,15 +50,16 @@ class Traveling_Salesman_Evoluion:
         self.create_first_gen()
         self.mutation_rate = mutation_rate  # mutation_rate
         self.distanceMatrix = self.createDistanceMatrix(array_index)  # put the distanceMatrix
+        self.maxPath = maxPath(self.distanceMatrix)
         self.homeCity = array_index[0]  # put the home city
 
     def fitness(self, chromosome):
-        fitness = 0
+        sumPath = 0
         for i in range(len(chromosome) - 1):
-            fitness += self.distanceMatrix[i][i + 1]
-        fitness += self.distanceMatrix[0][chromosome[0]]
-        fitness += self.distanceMatrix[chromosome[-1]][0]
-        return 1/fitness
+            sumPath += self.distanceMatrix[i][i + 1]
+        sumPath += self.distanceMatrix[0][chromosome[0]]
+        sumPath += self.distanceMatrix[chromosome[-1]][0]
+        return round(self.maxPath-sumPath)
 
     def mutate(self, chromosome):
         index1, index2 = random.sample(range(len(chromosome)), 2)
@@ -60,8 +72,14 @@ class Traveling_Salesman_Evoluion:
         child2 = parent2[0:crossover_point]
         for city in parent2:
             if city not in child1:
-                child1.appand(city)
+                child1.append(city)
         for city in parent1:
             if city not in child2:
-                child2.appand(city)
+                child2.append(city)
         return child1, child2
+
+
+if __name__ == "__main__":
+    traveler = Traveling_Salesman_Evoluion(20, 0.1, [(0, 0), (1, 2), (3, 1), (7, 8), (4, 4), (1, 1), (5, 6)])
+    solution = GenericEvoluion(traveler, 200, 2)
+    solution.run()
