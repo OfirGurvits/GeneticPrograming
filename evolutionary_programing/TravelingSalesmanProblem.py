@@ -47,7 +47,7 @@ class Traveling_Salesman_Evoluion:
             fitness += self.distanceMatrix[i][i + 1]
         fitness += self.distanceMatrix[0][chromosome[0]]
         fitness += self.distanceMatrix[chromosome[-1]][0]
-        return fitness
+        return 1/fitness
 
     def mutate(self, chromosome):
         index1, index2 = random.sample(range(len(chromosome)), 2)
