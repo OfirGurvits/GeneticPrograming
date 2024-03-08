@@ -50,16 +50,21 @@ class Traveling_Salesman_Evoluion:
         self.create_first_gen()
         self.mutation_rate = mutation_rate  # mutation_rate
         self.distanceMatrix = self.createDistanceMatrix(array_index)  # put the distanceMatrix
+        print(self.distanceMatrix)
         self.maxPath = maxPath(self.distanceMatrix)
         self.homeCity = array_index[0]  # put the home city
 
-    def fitness(self, chromosome):
+    def chromosomeCost(self, chromosome):
         sumPath = 0
         for i in range(len(chromosome) - 1):
-            sumPath += self.distanceMatrix[i][i + 1]
+            sumPath += self.distanceMatrix[chromosome[i]][chromosome[i + 1]]
         sumPath += self.distanceMatrix[0][chromosome[0]]
         sumPath += self.distanceMatrix[chromosome[-1]][0]
-        return round(self.maxPath-sumPath)
+        return sumPath
+
+    def fitness(self, chromosome):
+
+        return round(self.maxPath - self.chromosomeCost(chromosome))
 
     def mutate(self, chromosome):
         index1, index2 = random.sample(range(len(chromosome)), 2)
@@ -80,6 +85,7 @@ class Traveling_Salesman_Evoluion:
 
 
 if __name__ == "__main__":
-    traveler = Traveling_Salesman_Evoluion(20, 0.1, [(0, 0), (1, 2), (3, 1), (7, 8), (4, 4), (1, 1), (5, 6)])
+    traveler = Traveling_Salesman_Evoluion(100, 0.01, [(8, 1), (7, 5), (1, 9), (5, 9), (0, 6), (8, 1), (0, 2)])
+
     solution = GenericEvoluion(traveler, 200, 2)
     solution.run()
