@@ -1,6 +1,6 @@
 from Generic_Evoluion import GenericEvoluion
 import random
-
+import time
 import math
 
 
@@ -9,6 +9,24 @@ def euclidean_distance(point1, point2):
     x2, y2 = point2
     distance = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     return distance
+
+def read_from_data(name):
+    with open(name, 'r') as file:
+        # קרוא את התוכן של הקובץ
+        lines = file.readlines()
+
+        # יצירת מערך של טאפלים
+        tuples_array = []
+
+        # לולאה על כל שורה בקובץ
+        for line in lines:
+            # פיצוץ השורה למספרים
+            numbers = [int(num) for num in line.split()]
+
+            # יצירת טאפל והוספתו למערך
+            tuple_item = (numbers[0], numbers[1])
+            tuples_array.append(tuple_item)
+        return tuples_array
 
 
 def maxPath(matrix):
@@ -64,7 +82,7 @@ class Traveling_Salesman_Evoluion:
 
     def fitness(self, chromosome):
 
-        return round(self.maxPath - self.chromosomeCost(chromosome))
+        return round((self.maxPath - self.chromosomeCost(chromosome)))
 
     def mutate(self, chromosome):
         index1, index2 = random.sample(range(len(chromosome)), 2)
@@ -85,7 +103,14 @@ class Traveling_Salesman_Evoluion:
 
 
 if __name__ == "__main__":
-    traveler = Traveling_Salesman_Evoluion(50, 0.1, [(8, 1), (7, 5), (1, 9), (5, 9), (0, 6), (8, 1), (0, 2)])
+    start_time = time.time()
 
-    solution = GenericEvoluion(traveler, 200, 2)
+    traveler = Traveling_Salesman_Evoluion(300, 0.1, read_from_data('tsp.txt'))
+
+    solution = GenericEvoluion(traveler, 5000, 2)
     solution.run()
+    end_time = time.time()
+    elapsed_time_minutes = (end_time - start_time) / 60
+
+    # הדפס את תוצאת הקוד ואת זמן הריצה
+    print(f"זמן ריצה: {elapsed_time_minutes:.4f} דקות")

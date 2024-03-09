@@ -40,7 +40,7 @@ class GenericEvoluion:
         self.averageFitness.append((self.l, average_fitness))
         self.l += 1
         self.crossover(total, fitness)
-
+        return best_solution
     def get_parent(self, fitness, number, chromosomes):
         for chromosome in chromosomes:
             if fitness[tuple(chromosome)] > number:
@@ -74,6 +74,17 @@ class GenericEvoluion:
 
     def run(self):
         for i in range(self.num_of_gens):
-            self.do_one_generation()
+          best_solution=  self.do_one_generation()
+        file_name = "output.txt"
+
+        # פתח את הקובץ לכתיבה
+        with open(file_name, "w") as file:
+            file.write(str( 1) + "\n")
+
+            # עבור על כל איבר במערך
+            for item in best_solution:
+                # כתוב את האיבר לקובץ, כל איבר בשורה נפרדת
+                file.write(str(item+1) + "\n")
+            file.write(str( 1) + "\n")
 
         draw_combined_plot(self.maxFitness,self.averageFitness)
