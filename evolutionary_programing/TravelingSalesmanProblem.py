@@ -85,7 +85,7 @@ class Traveling_Salesman_Evoluion:
 
 
 if __name__ == "__main__":
-    traveler = Traveling_Salesman_Evoluion(100, 0.01, [(8, 1), (7, 5), (1, 9), (5, 9), (0, 6), (8, 1), (0, 2)])
+    traveler = Traveling_Salesman_Evoluion(50, 0.1, [(8, 1), (7, 5), (1, 9), (5, 9), (0, 6), (8, 1), (0, 2)])
 
     solution = GenericEvoluion(traveler, 200, 2)
     solution.run()

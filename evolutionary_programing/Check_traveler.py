@@ -35,15 +35,15 @@ def brute_force_tsp(cities):
 
     all_routes = list(itertools.permutations(range(1, num_cities)))
     min_distance = float('inf')
-    optimal_route = None
+    optimal_route = []
 
     for route in all_routes:
         distance = calculate_distance(route, distances)
         if distance < min_distance:
             min_distance = distance
-            optimal_route = route
-    print("check- [1, 4, 6, 3, 2, 5]", calculate_distance([1, 4, 6, 3, 2, 5], distances))
-
+            optimal_route = [route]
+        if distance==min_distance:
+            optimal_route.append(route)
     return optimal_route, min_distance
 
 
@@ -53,6 +53,6 @@ if __name__ == "__main__":
     cities = [(8, 1), (7, 5), (1, 9), (5, 9), (0, 6), (8, 1), (0, 2)]
 
     optimal_route, min_distance = brute_force_tsp(cities)
-
+    print("number of answers is", len(optimal_route))
     print("Optimal Route:", optimal_route)
     print("Minimum Distance:", min_distance)

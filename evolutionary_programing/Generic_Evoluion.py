@@ -1,13 +1,19 @@
 # recieves a class which implements fitness and has a field called
 # chromosomes
 import random
+from Print_Graph import draw_combined_plot
+
+
 
 class GenericEvoluion:
     def __init__(self, problem, num_of_gens, elitism):
         self.problem = problem
         self.num_of_gens = num_of_gens
         self.elitism = elitism
+        self.maxFitness = []
+        self.averageFitness = []
         self.l = 0
+
     def do_one_generation(self):
         # population = self.problem.population
         fitness = {}
@@ -27,9 +33,11 @@ class GenericEvoluion:
         print("average fitness is", average_fitness)
         print("max fitness is", max_fitness)
         print("best solution is", best_solution)
-        print("best solution cost is", self.problem.chromosomeCost( best_solution))
+        print("best solution cost is", self.problem.chromosomeCost(best_solution))
 
         print("generation: ", self.l)
+        self.maxFitness.append((self.l, max_fitness))
+        self.averageFitness.append((self.l, average_fitness))
         self.l += 1
         self.crossover(total, fitness)
 
@@ -67,3 +75,5 @@ class GenericEvoluion:
     def run(self):
         for i in range(self.num_of_gens):
             self.do_one_generation()
+
+        draw_combined_plot(self.maxFitness,self.averageFitness)
