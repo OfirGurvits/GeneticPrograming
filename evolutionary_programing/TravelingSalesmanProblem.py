@@ -71,6 +71,8 @@ class Traveling_Salesman_Evoluion:
         print(self.distanceMatrix)
         self.maxPath = maxPath(self.distanceMatrix)
         self.homeCity = array_index[0]  # put the home city
+        self.best_fitness = maxPath
+
 
     def chromosomeCost(self, chromosome):
         sumPath = 0

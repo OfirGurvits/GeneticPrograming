@@ -1,7 +1,8 @@
 import math
 import random
-
+import time
 from Generic_Evoluion import GenericEvoluion
+
 
 def is_safe(board, row, col):
     # Check if there is any queen in the current row
@@ -21,6 +22,7 @@ def is_safe(board, row, col):
 
     return True
 
+
 def solve_queens_util(board, col):
     if col >= 8:
         return True
@@ -36,8 +38,9 @@ def solve_queens_util(board, col):
 
     return False
 
+
 def solve_queens():
-    board = [[0]*8 for _ in range(8)]
+    board = [[0] * 8 for _ in range(8)]
 
     if not solve_queens_util(board, 0):
         print("Solution does not exist")
@@ -49,6 +52,7 @@ def solve_queens():
 
     return True
 
+
 # Solve the problem
 solve_queens()
 
@@ -57,7 +61,7 @@ class Queens_Evoluion:
     def generateSolution(self):
         solution = [1, 2, 3, 4, 5, 6, 7, 8]
         random.shuffle(solution)
-        while self.fitness(solution) > 20:
+        while self.fitness(solution) > 24:
             random.shuffle(solution)
         return solution
 
@@ -69,7 +73,8 @@ class Queens_Evoluion:
         self.chromosomes = []
         self.num_of_chromosomes = num_of_chromosomes
         self.create_first_gen()
-        self.mutation_rate = 0.01  # mutation_rate
+        self.mutation_rate = mutation_rate  # mutation_rate
+        self.best_fitness = 28
 
     def fitness(self, chromosome):
         fitness = 0
@@ -77,7 +82,7 @@ class Queens_Evoluion:
             for j in range(i + 1, 8):
                 if chromosome[i] != chromosome[j] and abs(i - j) != abs(chromosome[i] - chromosome[j]):
                     fitness += 1
-        #return math.ceil(math.sqrt(fitness))
+        # return math.ceil(math.sqrt(fitness))
         return fitness
 
     def mutate(self, chromosome):
@@ -106,15 +111,43 @@ class Queens_Evoluion:
             self.mutate(child2)
         return child1, child2
 
+    def brute_force(self):
+        for i in range(1,9):
+            for j in range(1,9):
+                for k in range(1,9):
+                    for l in range(1,9):
+                        for r in range(1,9):
+                            for c in range(1,9):
+                                for d in range(1,9):
+                                    for e in range(1,9):
+                                        lst = [i, j, k, l, r, c, d, e]
+                                        if self.fitness(lst) == 28:
+                                            return lst
+
 
 if __name__ == "__main__":
+    start_time = time.time()
+    # Calculate running time
     queens = Queens_Evoluion(200, 0.05)
-    solution = GenericEvoluion(queens, 200, 2)
+    solution = GenericEvoluion(queens, 300, 2)
     solution.run()
+    end_time = time.time()
+    running_time = end_time - start_time
+    print("Running time of genetic: " + str(running_time))
     # Convert inner lists to tuples before adding to set
     based = []
+    almost = []
     for row in queens.chromosomes:
         if queens.fitness(row) == 28:
             based.append(row)
+        if queens.fitness(row) == 27:
+            almost.append(row)
     print(set(tuple(row) for row in based))
+    print(set(tuple(row) for row in almost))
+    #start_time = time.time()
+    #bf_solution = queens.brute_force()
+    #end_time = time.time()
+    #running_time = end_time - start_time
+    #print("Running time of brute force is", running_time)
+    #print("brute foce solution is ", bf_solution)
     # solve_queens()

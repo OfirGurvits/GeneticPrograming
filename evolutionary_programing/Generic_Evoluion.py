@@ -33,9 +33,10 @@ class GenericEvoluion:
         print("average fitness is", average_fitness)
         print("max fitness is", max_fitness)
         print("best solution is", best_solution)
-#        print("best solution cost is", self.problem.chromosomeCost(best_solution))
-
-        print("generation: ", self.l)
+        #print("best solution cost is", self.problem.chromosomeCost(best_solution))
+        if self.problem.fitness(best_solution) == self.problem.best_fitness:
+            return best_solution
+        #print("generation: ", self.l)
         self.maxFitness.append((self.l, max_fitness))
         self.averageFitness.append((self.l, average_fitness))
         self.l += 1
