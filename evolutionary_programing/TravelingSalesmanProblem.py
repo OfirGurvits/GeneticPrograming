@@ -10,6 +10,7 @@ def euclidean_distance(point1, point2):
     distance = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     return distance
 
+
 def read_from_data(name):
     with open(name, 'r') as file:
         # קרוא את התוכן של הקובץ
@@ -73,7 +74,6 @@ class Traveling_Salesman_Evoluion:
         self.homeCity = array_index[0]  # put the home city
         self.best_fitness = maxPath
 
-
     def chromosomeCost(self, chromosome):
         sumPath = 0
         for i in range(len(chromosome) - 1):
@@ -101,15 +101,19 @@ class Traveling_Salesman_Evoluion:
         for city in parent1:
             if city not in child2:
                 child2.append(city)
+        if random.random() < self.mutation_rate:
+            child1 = self.mutate(child1)
+        if random.random() < self.mutation_rate:
+            child1 = self.mutate(child1)
         return child1, child2
 
 
 if __name__ == "__main__":
     start_time = time.time()
 
-    traveler = Traveling_Salesman_Evoluion(300, 0.1, read_from_data('tsp.txt'))
+    traveler = Traveling_Salesman_Evoluion(200, 0.1, read_from_data('tsp.txt'))
 
-    solution = GenericEvoluion(traveler, 5000, 2)
+    solution = GenericEvoluion(traveler, 10000, 10)
     solution.run()
     end_time = time.time()
     elapsed_time_minutes = (end_time - start_time) / 60

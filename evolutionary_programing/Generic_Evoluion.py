@@ -3,8 +3,6 @@
 import random
 from Print_Graph import draw_combined_plot
 
-
-
 class GenericEvoluion:
     def __init__(self, problem, num_of_gens, elitism):
         self.problem = problem
@@ -33,15 +31,17 @@ class GenericEvoluion:
         print("average fitness is", average_fitness)
         print("max fitness is", max_fitness)
         print("best solution is", best_solution)
+      #  if isinstance(self.problem, TravelingSalesmanProblem):
         #print("best solution cost is", self.problem.chromosomeCost(best_solution))
         if self.problem.fitness(best_solution) == self.problem.best_fitness:
             return best_solution
-        #print("generation: ", self.l)
+        # print("generation: ", self.l)
         self.maxFitness.append((self.l, max_fitness))
         self.averageFitness.append((self.l, average_fitness))
         self.l += 1
         self.crossover(total, fitness)
         return best_solution
+
     def get_parent(self, fitness, number, chromosomes):
         for chromosome in chromosomes:
             if fitness[tuple(chromosome)] > number:
@@ -75,17 +75,17 @@ class GenericEvoluion:
 
     def run(self):
         for i in range(self.num_of_gens):
-          best_solution=  self.do_one_generation()
+            best_solution = self.do_one_generation()
         file_name = "output.txt"
 
         # פתח את הקובץ לכתיבה
         with open(file_name, "w") as file:
-            file.write(str( 1) + "\n")
+            file.write(str(1) + "\n")
 
             # עבור על כל איבר במערך
             for item in best_solution:
                 # כתוב את האיבר לקובץ, כל איבר בשורה נפרדת
-                file.write(str(item+1) + "\n")
-            file.write(str( 1) + "\n")
+                file.write(str(item + 1) + "\n")
+            file.write(str(1) + "\n")
 
-        draw_combined_plot(self.maxFitness,self.averageFitness)
+        draw_combined_plot(self.maxFitness, self.averageFitness)
