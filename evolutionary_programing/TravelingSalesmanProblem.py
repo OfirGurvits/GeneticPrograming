@@ -73,6 +73,7 @@ class Traveling_Salesman_Evoluion:
         self.maxPath = maxPath(self.distanceMatrix)
         self.homeCity = array_index[0]  # put the home city
         self.best_fitness = maxPath
+        self.id=1
 
     def chromosomeCost(self, chromosome):
         sumPath = 0
@@ -111,8 +112,7 @@ class Traveling_Salesman_Evoluion:
 if __name__ == "__main__":
     start_time = time.time()
 
-    traveler = Traveling_Salesman_Evoluion(200, 0.1, read_from_data('tsp.txt'))
-
+    traveler = Traveling_Salesman_Evoluion(200, 0.01, read_from_data('tsp.txt'))
     solution = GenericEvoluion(traveler, 10000, 10)
     solution.run()
     end_time = time.time()

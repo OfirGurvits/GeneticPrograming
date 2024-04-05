@@ -1,7 +1,7 @@
 # recieves a class which implements fitness and has a field called
 # chromosomes
 import random
-from Print_Graph import draw_combined_plot
+#from Print_Graph import draw_combined_plot
 
 class GenericEvoluion:
     def __init__(self, problem, num_of_gens, elitism):
@@ -28,10 +28,9 @@ class GenericEvoluion:
                 max_fitness = cur_fitness
             average_fitness += cur_fitness
         average_fitness /= len(self.problem.chromosomes)
-        print("average fitness is", average_fitness)
-        print("max fitness is", max_fitness)
-        print("best solution is", best_solution)
-      #  if isinstance(self.problem, TravelingSalesmanProblem):
+        #print("average fitness is", average_fitness)
+        #print("max fitness is", max_fitness)
+        #print("best solution is", best_solution)
         #print("best solution cost is", self.problem.chromosomeCost(best_solution))
         if self.problem.fitness(best_solution) == self.problem.best_fitness:
             return best_solution
@@ -75,9 +74,16 @@ class GenericEvoluion:
 
     def run(self):
         for i in range(self.num_of_gens):
+            print("generation is", i)
             best_solution = self.do_one_generation()
+        if self.problem.id==1:
+            best_solution = [0] + best_solution
+            best_result=[]
+            for num in best_solution:
+                best_result.append(num + 1)
+            print(best_result)
+        '''
         file_name = "output.txt"
-
         # פתח את הקובץ לכתיבה
         with open(file_name, "w") as file:
             file.write(str(1) + "\n")
@@ -89,3 +95,4 @@ class GenericEvoluion:
             file.write(str(1) + "\n")
 
         draw_combined_plot(self.maxFitness, self.averageFitness)
+        '''

@@ -75,6 +75,7 @@ class Queens_Evoluion:
         self.create_first_gen()
         self.mutation_rate = mutation_rate  # mutation_rate
         self.best_fitness = 28
+        self.id=0
 
     def fitness(self, chromosome):
         fitness = 0
